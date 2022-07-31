@@ -1,6 +1,6 @@
  # LAbeX - Encontre as Melhores Viagens Espaciais !
 
-Projeto desenvolvido para a agencia de Viagens Espaciais ficticia LabeX realizado através do Bootcam da Labenu
+Projeto desenvolvido para a agencia de Viagens Espaciais ficticia LabeX realizado através do Bootcamp da Labenu
 
 # Tecnologias Utilizadas 
 React JS, Styled-components, Hooks, Material UI , API Requests atraves da blibioteca axios.
