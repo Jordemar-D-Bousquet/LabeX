@@ -7,9 +7,12 @@ import { BASE_URL } from '../../constants/urls'
 import Grid from '@material-ui/core/Grid';
 import{LoginContainer, InputField, ButtonStyled, ContainerBackButton} from './styledLogin'
 import Button from '@material-ui/core/Button';
+import { CircularProgress } from '@material-ui/core';
+import Swal from 'sweetalert2'
 
 const LoginPage = () => {
 
+const [Loading, setLoading] = useState(false)
 
 const { form, onChange, cleanFields } = useForms({
     email:'',
@@ -22,14 +25,17 @@ const navigate = useNavigate()
 const submitLogin = (event) => {
   event.preventDefault()
 
+  setLoading(true)
   axios.post(`${BASE_URL}/login`,form)
   .then((resp) => {
       localStorage.setItem('token', resp.data.token)
       navigate('/admin/trips/list')
+      setLoading(false)
       cleanFields()
 
   }).catch((err) =>{
-      alert("Email ou Senha Invalido")
+      Swal.fire({icon: 'error', text: 'Email ou Senha Inválido'})
+      setLoading(false)
       cleanFields()
 
   })
@@ -65,7 +71,7 @@ const submitLogin = (event) => {
         value ={form.password}
         onChange={onChange}
         required/>
-        <ButtonStyled>Entrar</ButtonStyled>
+        <ButtonStyled>{Loading? <CircularProgress color={'inherit'} size={24}/>: <p>Entrar</p>}</ButtonStyled>
         </LoginContainer>
         </form>
         

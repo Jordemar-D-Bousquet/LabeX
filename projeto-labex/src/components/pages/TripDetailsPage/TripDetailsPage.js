@@ -3,10 +3,11 @@ import { useEffect,useState } from 'react'
 import { goBack, goToLogout } from '../../Routes/coordinator'
 import { BASE_URL } from '../../constants/urls'
 import {ContainerButton, Card} from './StyledTripDetail'
+import Loading from '../../Loading/Loading'
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
-
+import Swal from 'sweetalert2'
 
 const TripDetailsPage = () => {
 
@@ -54,6 +55,7 @@ const getDecideCandidate = (aprove,decide) =>{
   setDecideCandidateId(aprove)
   setBody({approve:decide})
 
+
 }
 
 const putDecideCandidate = () =>{
@@ -64,8 +66,7 @@ const putDecideCandidate = () =>{
         auth:token
       }
     }).then((resp)=>{
-        alert('Decisão acadata com Sucesso!!')
-        
+        document.location.reload(true)
         
       }).catch((err)=>{
 
@@ -119,15 +120,15 @@ const ListAproved = aproved && aproved.map((aprov)=>{
         justifyContent="space-between"
         alignItems="center"
         >
-    
+        {tripDetail? 
         <div>
-        
         <h3>{tripDetail.name}</h3>
         <p>Descrição: {tripDetail.description}</p>
         <p>Planeta: {tripDetail.planet}</p>
         <p>Duração: {tripDetail.durationInDays}</p>
         <p>Data: {tripDetail.date}</p>
         </div>
+        : <Loading/>}
         <hr/>
         <div>
           <h3>Candidatos Pendentes</h3>

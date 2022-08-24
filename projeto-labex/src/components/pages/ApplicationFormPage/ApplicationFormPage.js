@@ -8,8 +8,11 @@ import Grid from '@material-ui/core/Grid';
 import {FormContainer,InputField,SelectFiled,ContainerBackButton, ButtonStyled} from './StyledApllicationForm'
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
+import { CircularProgress } from '@material-ui/core';
+import Swal from 'sweetalert2'
 
 const ApplicationFormPage = () => {
+  const [Loading, setLoading] = useState(false)
   const [trips,setTrips] = useState('')
   const [tripId, setTripId] = useState('')
 
@@ -40,28 +43,32 @@ const ApplicationFormPage = () => {
   }
 
   const getTrip = () =>{
+    
 
     axios.get(`${BASE_URL}/trips`)
     .then((resp) => {
       setTrips(resp.data.trips)
       
+      
 
     }).catch((err) =>{
-        alert('Erro!! Tente Novamente')
+      Swal.fire({icon: 'error', text: 'Erro!! tente novamente'})
+        
     })
 
   }
 
   const ApplytoTrip = () => {
 
-
+      setLoading(true)
       axios.post(`${BASE_URL}/trips/${tripId}/apply`,form)
       .then((resp) =>{
-        alert("Inscrição Realizada com Sucesso!!")
+        setLoading(false)
+        Swal.fire({icon: 'success', text: 'Inscrição realizada!'})
       })
       .catch((err) =>{
-
-        alert("Erro, Tente Novamente!!")
+        setLoading(false)
+        Swal.fire({icon: 'error', text: 'Erro!! tente novamente'})
       })
 
   }
@@ -143,7 +150,7 @@ const ApplicationFormPage = () => {
                     
             </SelectFiled>
             <br/>
-            <ButtonStyled>Enviar</ButtonStyled>
+            <ButtonStyled>{Loading?<CircularProgress color ={'inherit'} size={24}/>: <p>Enviar</p>}</ButtonStyled>
           </FormContainer>
           
         </Grid>

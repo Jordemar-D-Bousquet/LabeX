@@ -6,9 +6,13 @@ import { BASE_URL } from '../../constants/urls'
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios'
 import {CardContainer, Card, ContainerLogoutButton, ButtonStyled} from './StyledAdminHome'
+import Loading from '../../Loading/Loading'
 import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from '../../../Theme';
+import backAdmiPage from '../../Img/backAdmiPage.jpg'
 import Button from '@material-ui/core/Button';
+import 'animate.css';
+import Swal from 'sweetalert2'
 
 
 const AdminHomePage = () => {
@@ -48,7 +52,7 @@ const DeleteTrip = (id) =>{
       }
       
     }).then((resp) =>{
-      alert("Viagem Deletada com Sucesso")
+      document.location.reload(true)
     })
       .catch((err) =>{
         alert('Erro!!, Tente novamente')
@@ -60,13 +64,13 @@ const DeleteTrip = (id) =>{
 const ListTrips = trips && trips.map((trip) =>{
   return <Card key={trip.id} value={trip.id}>
     <p><b>{trip.name}</b></p>
-    <Button onClick ={() => goToTripDetails(navigate, trip.id)}><img src="https://img.icons8.com/material-outlined/24/000000/details-pane.png"/></Button>
-    <Button onClick ={() => DeleteTrip(trip.id)}><img src="https://img.icons8.com/material-outlined/24/000000/trash--v1.png"/></Button>
+    <Button onClick ={() => goToTripDetails(navigate, trip.id)} style ={{color:'white'}}><img src="https://img.icons8.com/material-outlined/24/000000/details-pane.png"/>Detalhes</Button>
+    <Button  onClick ={() => DeleteTrip(trip.id)} style ={{color:'white'}} ><img src="https://img.icons8.com/material-outlined/24/000000/trash--v1.png"/>Excluir</Button>
      </Card>
   })
 
   return (
-    <div>
+    <div style={{backgroundImage:`url(${backAdmiPage})`, backgroundSize:'cover', backgroundPosition:'center'}}>
       <ContainerLogoutButton>
       <Button onClick={() => goToLogout(navigate)}><img src="https://img.icons8.com/ios-filled/50/000000/logout-rounded-down.png"/></Button>
       </ContainerLogoutButton>
@@ -77,14 +81,13 @@ const ListTrips = trips && trips.map((trip) =>{
         justifyContent="space-between"
         alignItems="center"
         >
-      
-      
-        
-         <h2>Painel Administrativo</h2>
+         <h2 style ={{color:'white'}}>Painel Administrativo</h2>
+         <div class="animate__animated animate__fadeInLeftBig">
          <CardContainer>
-          {ListTrips}
+          {trips?ListTrips: <Loading/>}
           
         </CardContainer>
+        </div>
         <ButtonStyled onClick={() => goTocreateTrip(navigate)}>Criar Viagem</ButtonStyled>
         </Grid>
         </ThemeProvider>

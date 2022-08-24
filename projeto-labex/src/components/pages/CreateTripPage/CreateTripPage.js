@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import useForm from '../../hooks/useForms'
 import { goBack , goToLogout  } from '../../Routes/coordinator'
@@ -8,8 +8,13 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import {FormContainer, InputField, SelectFiled,ButtonStyled,ContainerButton} from './StyledCreateTrip'
 import axios from 'axios'
+import { CircularProgress } from '@material-ui/core';
+import Swal from 'sweetalert2'
 
 const CreateTripPage = () => {
+
+const [Loading, setLoading] = useState(false)
+
 const { form, onChange, cleanFields } = useForm({ 
   name: "", 
   planet: "", 
@@ -30,17 +35,20 @@ const onClickCreate = (event) => {
 
 
 const CreateTrip = () => {
+  setLoading(true)
   axios.post(`${BASE_URL}/trips`,form,{
     headers:{
       auth:token
     }
   }).then((resp) =>{
 
-    alert('Viagem Criada com Sucesso!!!')
+    Swal.fire({icon: 'success', text: 'Viagem criada com sucesso!!'})
+    setLoading(false)
 
   }).catch((err) => {
 
-    alert('Erro!! Tente Novamente')
+    Swal.fire({icon: 'error', text: 'Erro!! tente novamente'})
+    setLoading(false)
   })
 
 }
@@ -105,7 +113,7 @@ const CreateTrip = () => {
         min={50}
         required />
 
-        <ButtonStyled type='submit'>Criar</ButtonStyled>
+        <ButtonStyled type='submit'>{Loading?<CircularProgress color ={'inherit'} size={24}/>: <p>Criar</p>}</ButtonStyled>
         </FormContainer>
         </Grid>
         </div>

@@ -12,10 +12,11 @@ export const CardContainer = styled.div`
 `
 
 export const Card = styled.div`
+    color:white;
     border:3px solid black;
     padding:15px;
     text-align:center;
-
+    background-color:darkviolet;
 
 `
 

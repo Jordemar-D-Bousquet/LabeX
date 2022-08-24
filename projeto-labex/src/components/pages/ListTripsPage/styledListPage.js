@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import backListTrips from '../../Img/backListTrips.jpg'
 
 export const CardContainer = styled.div`
     display:grid;
@@ -12,8 +13,10 @@ export const CardContainer = styled.div`
 `
 
 export const Card = styled.div`
+    color:white;
     border:3px solid black;
     padding:15px;
+    background-color:darkviolet;
 
 
 `
@@ -39,4 +42,11 @@ export const ButtonStyled = styled.button`
         transform:scale(0.9);
     }
     margin: 5px;`
+    
+
+export const Background = styled.div`
+     
+  
+
+    `
     

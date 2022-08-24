@@ -37,14 +37,13 @@ export const ButtonStyled = styled.button`
     color: black;
     text-align: center;
     font-size: 20px;
-    padding: 10px;
+    height:65px;
     width: 180px;
     cursor: pointer;
     :hover{
         color:white;
         transform:scale(0.9);
     }
-    margin: 5px;
 
 `
 

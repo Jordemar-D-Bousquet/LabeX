@@ -5,9 +5,12 @@ import { BASE_URL } from '../../constants/urls'
 import Button from '@material-ui/core/Button';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from '../../../Theme';
-import { CardContainer,Card,ContainerBackButton,ButtonStyled } from './styledListPage';
+import { CardContainer,Card,ContainerBackButton,ButtonStyled,Background } from './styledListPage';
+import backListTrips from '../../Img/backListTrips.jpg'
+import Loading from '../../Loading/Loading';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios'
+import 'animate.css';
 
 
 const ListTripsPage = () => {
@@ -46,7 +49,8 @@ const ListTrips = trips && trips.map((trip) =>{
 })
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} fullWidith>
+      <Background style={{backgroundImage:`url(${backListTrips})`, backgroundSize:'cover', backgroundPosition:'center'}}>
        <ContainerBackButton>
         <Button onClick={() => goBack(navigate)}><img src="https://img.icons8.com/sf-black/64/000000/left.png"/></Button>
         </ContainerBackButton>
@@ -59,12 +63,15 @@ const ListTrips = trips && trips.map((trip) =>{
         >
        
         
-          <h1>Lista de Viagem</h1>
+          <h1 style ={{color:'white'}}>Lista de Viagem</h1>
+          <div class="animate__animated animate__fadeInLeftBig">
           <CardContainer>
-          {ListTrips}
+          {trips? ListTrips: <Loading/>}
           </CardContainer>
+          </div>
           <ButtonStyled onClick={() => goToAplicationForm(navigate)}>Inscerva se</ButtonStyled>
         </Grid>
+        </Background>
     </ThemeProvider>
   )
 }
